@@ -131,7 +131,10 @@ public class Huffman {
         buildCodeMap(st, x.left, s + '0');
         buildCodeMap(st, x.right, s + '1');
     }
-    
+    /**
+     * Writes a trie
+     * @param x - Huffman Node
+     */
     public static void writeTrie(HuffmanNode x) {
         if (x.left == null && x.right==null) {
             BinaryStdOut.write(true);
@@ -143,9 +146,15 @@ public class Huffman {
         writeTrie(x.right);
     }
 
-
+    /**
+     * Compresses message to binary and handles most print statements
+     * @param inputFile - what filename are we encoding
+     * @param outputFile - bin filename for output
+     */
     public static void compress(String inputFile, String outputFile){
+        //Empty string to build from text file
         String words = "";
+        //Reading text into string if in allowed characters
         try{
             File data = new File(inputFile);
             Scanner sophon = new Scanner(data);
@@ -158,19 +167,28 @@ public class Huffman {
         catch(FileNotFoundException x){
             System.out.println("File not found");
         }
+        //Frequency map creation
         HashMap<Character, Integer> freqs = determineFrequencies(words);
+        //Print frequency table - requirement 1
         System.out.println(freqs);
+        //Create huffman tree
         HuffmanNode root = createHuffman(freqs);
+        //Print each code
         printCode(root, "");
+        //Create empty Huffman code table
         String[] st = new String[256];
+        //Build code table
         buildCodeMap(st, root, "");
 
+        //Set file for output
         BinaryStdOut.setFile(outputFile);
 
-        // Write trie + original message length
+        // Write trie and original message length
         writeTrie(root);
         BinaryStdOut.write(words.length());
+        //Empty string to print out coded message
         String codedMessage = "";
+        //Encoding message
         for (int i = 0; i < words.length(); i++) {
             String code = st[words.charAt(i)];
             for (int j = 0; j < code.length(); j++) {
@@ -184,13 +202,59 @@ public class Huffman {
                 }
                 else throw new IllegalStateException("Illegal state");
             }}
+            //Print coded message
             System.out.println(codedMessage);
             BinaryStdOut.close();
         
     }
    
 public static void main(String[] args) {
-    //String input = "Grace is an awsesome person and she     creates    cool things";
+    //String encodedFileName = "encodedfile"+System.currentTimeMillis()+".bin";
+    //compress("filetoencode.txt", encodedFileName);
     String encodedFileName = "encodedfile"+System.currentTimeMillis()+".bin";
-    compress("filetoencode.txt", encodedFileName);
+    compress("largerTest.txt", encodedFileName);
 }}
+/**
+ * Sample output:
+ * Using filetoencode.txt:
+ * {a=3, !=0, b=1, c=1, d=1, e=1, f=1, g=0, h=0, i=0, j=0, k=0, +=0, l=0, m=0, -=0, n=0, .=0, o=0, p=0, q=0, r=0, s=0, t=0, u=0, v=0, w=0, x=0, y=0, z=0}
+'a': 0
+'b': 100
+'f': 101
+'c': 110
+'e': 1110
+'d': 1111
+01001001000111111111111111110110110101101101101110111011101110
+
+Using largerTest.txt:
+{a=155, !=13, b=25, c=44, d=107, e=270, f=52, g=47, h=131, i=126, j=2, k=25, +=1, l=81, m=32, -=444, n=147, .=71, o=155, p=34, q=0, r=152, s=120, t=181, u=40, v=17, w=51, x=2, y=20, z=0}
+'s': 0000
+'k': 000100
+'m': 000101
+'p': 000110
+'v': 0001110
+'x': 000111100
+'+': 0001111010
+'j': 0001111011
+'!': 00011111
+'i': 0010
+'h': 0011
+'e': 010
+'n': 0110
+'.': 01110
+'l': 01111
+'r': 1000
+'o': 1001
+'a': 1010
+'u': 101100
+'c': 101101
+'y': 1011100
+'b': 1011101
+'g': 101111
+'t': 1100
+'w': 110100
+'f': 110101
+'d': 11011
+'-': 111
+1100110011001100001100110011001101001001011111111100100010001000101...it goes on for a very long time
+ */
