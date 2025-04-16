@@ -1,1 +1,1 @@
-To run this project, you should be able to run the main method in Huffman.java. The Huffman class has dependencies on BinaryIn.java, BinaryOut.java, BinaryStdIn.java, and BinaryStdOut.java.
+To run this project, you should be able to run the main method in Huffman.java. The code can be run in VScode, or some other IDE. Otherwise, it can be run from the command line with the command java Huffman.java > output.txt. This will put the output in a textfile easy to read. An encoded file will also be created for each test case.

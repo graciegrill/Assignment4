@@ -103,6 +103,10 @@ public class Huffman {
      * @param s - will be empty string to append characters and binary code
      */
     public static void printCode(HuffmanNode root, String s) {
+        //need to add logical check here
+        if (root == null) {
+            return;
+        } 
         // leaf node check
         if (root.left == null && root.right == null) {
             System.out.println("'" + root.ch + "': " + s);
@@ -209,10 +213,10 @@ public class Huffman {
     }
    
 public static void main(String[] args) {
-    //String encodedFileName = "encodedfile"+System.currentTimeMillis()+".bin";
-    //compress("filetoencode.txt", encodedFileName);
     String encodedFileName = "encodedfile"+System.currentTimeMillis()+".bin";
-    compress("largerTest.txt", encodedFileName);
+    compress("filetoencode.txt", encodedFileName);
+    String encodedFileName1 = "encodedfile"+System.currentTimeMillis()+".bin";
+    compress("largerTest.txt", encodedFileName1);
 }}
 /**
  * Sample output:
