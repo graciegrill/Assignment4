@@ -1,0 +1,1 @@
+To run this project, you should be able to run the main method in Huffman.java. The Huffman class has dependencies on BinaryIn.java, BinaryOut.java, BinaryStdIn.java, and BinaryStdOut.java.
